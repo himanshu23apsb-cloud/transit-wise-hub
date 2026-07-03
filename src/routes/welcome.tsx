@@ -320,7 +320,7 @@ function Welcome() {
                   <Link to="/auth/register">Get started <ArrowRight className="ml-1 h-4 w-4" /></Link>
                 </Button>
                 <Button size="lg" variant="outline" asChild>
-                  <Link to="/auth/login">Explore demo</Link>
+                  <Link to="/live">See live map</Link>
                 </Button>
               </div>
             </div>
