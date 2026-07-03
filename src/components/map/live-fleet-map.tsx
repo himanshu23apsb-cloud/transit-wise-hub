@@ -377,9 +377,9 @@ function SelectedCard({
       </div>
 
       <div className="mt-3 grid grid-cols-3 gap-2 text-center">
-        <Mini label="Distance" value={`${shipment.distance} km`} icon={<Navigation className="h-3 w-3" />} />
-        <Mini label="Weight" value={`${shipment.weight} kg`} icon={<Package className="h-3 w-3" />} />
-        <Mini label="Price" value={`₹${shipment.price}`} icon={<Zap className="h-3 w-3" />} />
+        <Mini label="Distance" value={`${shipment.distanceKm} km`} icon={<Navigation className="h-3 w-3" />} />
+        <Mini label="Weight" value={`${shipment.package.weight} kg`} icon={<Package className="h-3 w-3" />} />
+        <Mini label="Price" value={`₹${shipment.cost}`} icon={<Zap className="h-3 w-3" />} />
       </div>
 
       <div className="mt-3 flex gap-2">
