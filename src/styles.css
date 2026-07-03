@@ -178,3 +178,104 @@
     var(--card)
   );
 }
+
+@utility text-gradient {
+  background: linear-gradient(
+    120deg,
+    var(--primary) 0%,
+    color-mix(in oklab, var(--primary) 60%, var(--success)) 55%,
+    var(--success) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility mesh-bg {
+  background-color: var(--background);
+  background-image:
+    radial-gradient(at 20% 15%, color-mix(in oklab, var(--primary) 35%, transparent) 0px, transparent 55%),
+    radial-gradient(at 85% 10%, color-mix(in oklab, var(--success) 30%, transparent) 0px, transparent 55%),
+    radial-gradient(at 70% 90%, color-mix(in oklab, var(--primary) 25%, transparent) 0px, transparent 50%),
+    radial-gradient(at 10% 85%, color-mix(in oklab, var(--success) 22%, transparent) 0px, transparent 55%);
+}
+
+@utility grid-bg {
+  background-image:
+    linear-gradient(to right, color-mix(in oklab, var(--foreground) 6%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklab, var(--foreground) 6%, transparent) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: radial-gradient(ellipse at center, black 40%, transparent 75%);
+}
+
+@utility glow-primary {
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--primary) 30%, transparent),
+    0 10px 40px -10px color-mix(in oklab, var(--primary) 55%, transparent),
+    0 0 60px -20px color-mix(in oklab, var(--primary) 60%, transparent);
+}
+
+@utility shine {
+  position: relative;
+  overflow: hidden;
+}
+@utility shine-inner {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 30%,
+    color-mix(in oklab, white 40%, transparent) 50%,
+    transparent 70%
+  );
+  transform: translateX(-100%);
+  animation: shine 2.6s ease-in-out infinite;
+}
+
+@keyframes shine {
+  to { transform: translateX(100%); }
+}
+
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+@keyframes float-y-slow {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(2deg); }
+}
+@keyframes drift {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(30px, -20px) scale(1.08); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+@keyframes aurora {
+  0%, 100% { transform: translate3d(0,0,0) rotate(0deg); }
+  50% { transform: translate3d(-40px, 30px, 0) rotate(180deg); }
+}
+@keyframes truck-move {
+  0% { transform: translateX(-20%); }
+  100% { transform: translateX(120%); }
+}
+@keyframes pulse-ring {
+  0% { transform: scale(0.8); opacity: 0.7; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+@keyframes gradient-pan {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.animate-float { animation: float-y 6s ease-in-out infinite; }
+.animate-float-slow { animation: float-y-slow 9s ease-in-out infinite; }
+.animate-drift { animation: drift 14s ease-in-out infinite; }
+.animate-aurora { animation: aurora 18s ease-in-out infinite; }
+.animate-truck { animation: truck-move 6s linear infinite; }
+.animate-pulse-ring { animation: pulse-ring 2.2s cubic-bezier(0.22, 1, 0.36, 1) infinite; }
+.animate-gradient-pan { background-size: 200% 200%; animation: gradient-pan 8s ease infinite; }
+.animate-marquee { animation: marquee 30s linear infinite; }
