@@ -547,3 +547,30 @@ function Mini({ label, value, icon }: { label: string; value: string; icon: Reac
     </div>
   );
 }
+
+function DateField({ label, value, onChange }: { label: string; value?: Date; onChange: (d?: Date) => void }) {
+  return (
+    <Popover>
+      <PopoverTrigger asChild>
+        <Button variant="outline" size="sm" className={cn("h-9 justify-start gap-1.5 font-normal", !value && "text-muted-foreground")}>
+          <CalendarIcon className="h-3.5 w-3.5" />
+          {value ? format(value, "MMM d") : label}
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-auto p-0" align="start">
+        <Calendar mode="single" selected={value} onSelect={onChange} initialFocus className={cn("p-3 pointer-events-auto")} />
+      </PopoverContent>
+    </Popover>
+  );
+}
+
+function Chip({ label, onClear }: { label: string; onClear: () => void }) {
+  return (
+    <span className="inline-flex items-center gap-1 rounded-full border bg-background px-2 py-0.5 text-[11px] capitalize">
+      {label}
+      <button onClick={onClear} className="grid h-3.5 w-3.5 place-items-center rounded-full hover:bg-muted">
+        <X className="h-2.5 w-2.5" />
+      </button>
+    </span>
+  );
+}
