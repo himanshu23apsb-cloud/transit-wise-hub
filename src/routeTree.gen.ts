@@ -11,6 +11,9 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WelcomeRouteImport } from './routes/welcome'
 import { Route as LiveRouteImport } from './routes/live'
+import { Route as DriverRouteImport } from './routes/driver'
+import { Route as CustomerRouteImport } from './routes/customer'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthVerifyEmailRouteImport } from './routes/auth.verify-email'
 import { Route as AuthResetPasswordRouteImport } from './routes/auth.reset-password'
@@ -27,6 +30,21 @@ const WelcomeRoute = WelcomeRouteImport.update({
 const LiveRoute = LiveRouteImport.update({
   id: '/live',
   path: '/live',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DriverRoute = DriverRouteImport.update({
+  id: '/driver',
+  path: '/driver',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CustomerRoute = CustomerRouteImport.update({
+  id: '/customer',
+  path: '/customer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -67,6 +85,9 @@ const AuthForgotPasswordRoute = AuthForgotPasswordRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
+  '/customer': typeof CustomerRoute
+  '/driver': typeof DriverRoute
   '/live': typeof LiveRoute
   '/welcome': typeof WelcomeRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
@@ -78,6 +99,9 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
+  '/customer': typeof CustomerRoute
+  '/driver': typeof DriverRoute
   '/live': typeof LiveRoute
   '/welcome': typeof WelcomeRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
@@ -90,6 +114,9 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
+  '/customer': typeof CustomerRoute
+  '/driver': typeof DriverRoute
   '/live': typeof LiveRoute
   '/welcome': typeof WelcomeRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
@@ -103,6 +130,9 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
+    | '/customer'
+    | '/driver'
     | '/live'
     | '/welcome'
     | '/auth/forgot-password'
@@ -114,6 +144,9 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/admin'
+    | '/customer'
+    | '/driver'
     | '/live'
     | '/welcome'
     | '/auth/forgot-password'
@@ -125,6 +158,9 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/admin'
+    | '/customer'
+    | '/driver'
     | '/live'
     | '/welcome'
     | '/auth/forgot-password'
@@ -137,6 +173,9 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRoute
+  CustomerRoute: typeof CustomerRoute
+  DriverRoute: typeof DriverRoute
   LiveRoute: typeof LiveRoute
   WelcomeRoute: typeof WelcomeRoute
   AuthForgotPasswordRoute: typeof AuthForgotPasswordRoute
@@ -161,6 +200,27 @@ declare module '@tanstack/react-router' {
       path: '/live'
       fullPath: '/live'
       preLoaderRoute: typeof LiveRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/driver': {
+      id: '/driver'
+      path: '/driver'
+      fullPath: '/driver'
+      preLoaderRoute: typeof DriverRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/customer': {
+      id: '/customer'
+      path: '/customer'
+      fullPath: '/customer'
+      preLoaderRoute: typeof CustomerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -217,6 +277,9 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRoute,
+  CustomerRoute: CustomerRoute,
+  DriverRoute: DriverRoute,
   LiveRoute: LiveRoute,
   WelcomeRoute: WelcomeRoute,
   AuthForgotPasswordRoute: AuthForgotPasswordRoute,
