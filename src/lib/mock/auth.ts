@@ -57,6 +57,7 @@ export const useAuth = create<AuthState>()(
 );
 
 export function roleHome(_role: Role) {
-  // Dashboards are under construction — send authenticated users back to welcome for now.
-  return "/welcome";
+  if (_role === "admin") return "/admin";
+  if (_role === "driver") return "/driver";
+  return "/customer";
 }
