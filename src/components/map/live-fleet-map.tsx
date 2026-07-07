@@ -1,9 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import L from "leaflet";
 import { MapContainer, Marker, Polyline, TileLayer, useMap } from "react-leaflet";
-import { Truck, MapPin, Navigation, Package, CheckCircle2, Clock, Zap, ChevronRight, RefreshCw } from "lucide-react";
+import { Truck, MapPin, Navigation, Package, CheckCircle2, Clock, Zap, ChevronRight, RefreshCw, Filter, X, CalendarIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { StatusBadge } from "@/components/common/status-badge";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Calendar } from "@/components/ui/calendar";
+import { format } from "date-fns";
 import { useData } from "@/lib/mock/store";
 import type { Shipment, ShipmentStatus } from "@/lib/mock/seed";
 import { cn } from "@/lib/utils";
@@ -106,16 +109,58 @@ export function LiveFleetMap({
   const storeShipments = useData((s) => s.shipments);
   const updateShipmentStatus = useData((s) => s.updateShipmentStatus);
 
-  const active = useMemo(() => {
+  const ACTIVE_STATUSES: ShipmentStatus[] = ["assigned", "picked_up", "in_transit", "near_destination"];
+  const PRIORITIES: Shipment["priority"][] = ["standard", "express", "same_day"];
+
+  const [statusFilter, setStatusFilter] = useState<ShipmentStatus[]>(ACTIVE_STATUSES);
+  const [priorityFilter, setPriorityFilter] = useState<Shipment["priority"][]>([...PRIORITIES]);
+  const [dateFrom, setDateFrom] = useState<Date | undefined>();
+  const [dateTo, setDateTo] = useState<Date | undefined>();
+
+  const baseActive = useMemo(() => {
     const all = propShipments ?? storeShipments;
-    return all
-      .filter((s) => ["assigned", "picked_up", "in_transit", "near_destination"].includes(s.status))
-      .slice(0, 8);
+    return all.filter((s) => ACTIVE_STATUSES.includes(s.status));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [propShipments, storeShipments]);
+
+  const active = useMemo(() => {
+    return baseActive
+      .filter((s) => statusFilter.includes(s.status))
+      .filter((s) => priorityFilter.includes(s.priority))
+      .filter((s) => {
+        if (!dateFrom && !dateTo) return true;
+        const t = new Date(s.createdAt).getTime();
+        if (dateFrom && t < dateFrom.setHours(0, 0, 0, 0)) return false;
+        if (dateTo && t > new Date(dateTo).setHours(23, 59, 59, 999)) return false;
+        return true;
+      })
+      .slice(0, 12);
+  }, [baseActive, statusFilter, priorityFilter, dateFrom, dateTo]);
+
+  const toggle = <T,>(arr: T[], setArr: (v: T[]) => void, v: T) =>
+    setArr(arr.includes(v) ? arr.filter((x) => x !== v) : [...arr, v]);
+
+  const filterCount =
+    (statusFilter.length !== ACTIVE_STATUSES.length ? 1 : 0) +
+    (priorityFilter.length !== PRIORITIES.length ? 1 : 0) +
+    (dateFrom || dateTo ? 1 : 0);
+
+  const resetFilters = () => {
+    setStatusFilter(ACTIVE_STATUSES);
+    setPriorityFilter([...PRIORITIES]);
+    setDateFrom(undefined);
+    setDateTo(undefined);
+  };
 
   const [selectedId, setSelectedId] = useState<string | null>(active[0]?.id ?? null);
   useEffect(() => {
-    if (!selectedId && active[0]) setSelectedId(active[0].id);
+    if (active.length === 0) {
+      setSelectedId(null);
+      return;
+    }
+    if (!selectedId || !active.some((s) => s.id === selectedId)) {
+      setSelectedId(active[0]!.id);
+    }
   }, [active, selectedId]);
 
   // Per-shipment animated progress (0..1)
@@ -254,18 +299,114 @@ export function LiveFleetMap({
         <div className="flex items-center justify-between border-b px-4 py-3">
           <div>
             <div className="text-sm font-semibold">Active shipments</div>
-            <div className="text-xs text-muted-foreground">{active.length} in motion · updates live</div>
+            <div className="text-xs text-muted-foreground">
+              {active.length} of {baseActive.length} shown · updates live
+            </div>
           </div>
-          <Button variant="ghost" size="icon" onClick={() => setTMap({})} title="Reset animations">
-            <RefreshCw className="h-4 w-4" />
-          </Button>
+          <div className="flex items-center gap-1">
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button variant="outline" size="sm" className="relative h-8 gap-1.5">
+                  <Filter className="h-3.5 w-3.5" />
+                  Filters
+                  {filterCount > 0 && (
+                    <span className="ml-0.5 grid h-4 min-w-4 place-items-center rounded-full bg-primary px-1 text-[10px] font-bold text-primary-foreground">
+                      {filterCount}
+                    </span>
+                  )}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent align="end" className="w-80 p-4">
+                <div className="mb-2 flex items-center justify-between">
+                  <div className="text-sm font-semibold">Filter shipments</div>
+                  {filterCount > 0 && (
+                    <button onClick={resetFilters} className="text-xs text-primary hover:underline">
+                      Clear all
+                    </button>
+                  )}
+                </div>
+
+                <div className="mt-3">
+                  <div className="mb-1.5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Status</div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {ACTIVE_STATUSES.map((s) => {
+                      const on = statusFilter.includes(s);
+                      return (
+                        <button
+                          key={s}
+                          onClick={() => toggle(statusFilter, setStatusFilter, s)}
+                          className={cn(
+                            "rounded-full border px-2.5 py-1 text-xs capitalize transition-colors",
+                            on ? "border-primary bg-primary/10 text-primary" : "hover:bg-muted",
+                          )}
+                        >
+                          {s.replace("_", " ")}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div className="mt-3">
+                  <div className="mb-1.5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Priority</div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {PRIORITIES.map((p) => {
+                      const on = priorityFilter.includes(p);
+                      return (
+                        <button
+                          key={p}
+                          onClick={() => toggle(priorityFilter, setPriorityFilter, p)}
+                          className={cn(
+                            "rounded-full border px-2.5 py-1 text-xs capitalize transition-colors",
+                            on ? "border-primary bg-primary/10 text-primary" : "hover:bg-muted",
+                          )}
+                        >
+                          {p.replace("_", " ")}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div className="mt-3">
+                  <div className="mb-1.5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Booked date</div>
+                  <div className="grid grid-cols-2 gap-2">
+                    <DateField label="From" value={dateFrom} onChange={setDateFrom} />
+                    <DateField label="To" value={dateTo} onChange={setDateTo} />
+                  </div>
+                </div>
+              </PopoverContent>
+            </Popover>
+            <Button variant="ghost" size="icon" onClick={() => setTMap({})} title="Reset animations">
+              <RefreshCw className="h-4 w-4" />
+            </Button>
+          </div>
         </div>
+        {filterCount > 0 && (
+          <div className="flex flex-wrap items-center gap-1.5 border-b bg-muted/30 px-3 py-2">
+            {statusFilter.length !== ACTIVE_STATUSES.length &&
+              statusFilter.map((s) => (
+                <Chip key={s} label={s.replace("_", " ")} onClear={() => toggle(statusFilter, setStatusFilter, s)} />
+              ))}
+            {priorityFilter.length !== PRIORITIES.length &&
+              priorityFilter.map((p) => (
+                <Chip key={p} label={p.replace("_", " ")} onClear={() => toggle(priorityFilter, setPriorityFilter, p)} />
+              ))}
+            {dateFrom && <Chip label={`From ${format(dateFrom, "MMM d")}`} onClear={() => setDateFrom(undefined)} />}
+            {dateTo && <Chip label={`To ${format(dateTo, "MMM d")}`} onClear={() => setDateTo(undefined)} />}
+          </div>
+        )}
         <div className="flex-1 overflow-auto p-2">
           {active.length === 0 && (
             <div className="grid h-full place-items-center text-center text-sm text-muted-foreground">
               <div>
                 <Package className="mx-auto mb-2 h-6 w-6 opacity-50" />
-                No active shipments right now.
+                {baseActive.length === 0 ? "No active shipments right now." : "No shipments match your filters."}
+                {filterCount > 0 && (
+                  <button onClick={resetFilters} className="mt-2 block w-full text-xs text-primary hover:underline">
+                    Clear filters
+                  </button>
+                )}
               </div>
             </div>
           )}
@@ -404,5 +545,32 @@ function Mini({ label, value, icon }: { label: string; value: string; icon: Reac
       <div className="flex items-center justify-center gap-1 text-[10px] uppercase text-muted-foreground">{icon}{label}</div>
       <div className="text-sm font-bold">{value}</div>
     </div>
+  );
+}
+
+function DateField({ label, value, onChange }: { label: string; value?: Date; onChange: (d?: Date) => void }) {
+  return (
+    <Popover>
+      <PopoverTrigger asChild>
+        <Button variant="outline" size="sm" className={cn("h-9 justify-start gap-1.5 font-normal", !value && "text-muted-foreground")}>
+          <CalendarIcon className="h-3.5 w-3.5" />
+          {value ? format(value, "MMM d") : label}
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-auto p-0" align="start">
+        <Calendar mode="single" selected={value} onSelect={onChange} initialFocus className={cn("p-3 pointer-events-auto")} />
+      </PopoverContent>
+    </Popover>
+  );
+}
+
+function Chip({ label, onClear }: { label: string; onClear: () => void }) {
+  return (
+    <span className="inline-flex items-center gap-1 rounded-full border bg-background px-2 py-0.5 text-[11px] capitalize">
+      {label}
+      <button onClick={onClear} className="grid h-3.5 w-3.5 place-items-center rounded-full hover:bg-muted">
+        <X className="h-2.5 w-2.5" />
+      </button>
+    </span>
   );
 }
