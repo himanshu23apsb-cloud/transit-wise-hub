@@ -330,7 +330,7 @@ function Welcome() {
         <footer className="border-t py-8">
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
             <Logo tagline />
-            <div className="text-xs text-muted-foreground">© 2026 SwiftShip. Built as a demo — every pixel handcrafted.</div>
+            <div className="text-xs text-muted-foreground">© 2026 SwiftShip Logistics. Built as a demo — every pixel handcrafted.</div>
           </div>
         </footer>
       </main>
