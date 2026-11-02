@@ -6,7 +6,7 @@ import { Logo } from "@/components/brand/logo";
 export const Route = createFileRoute("/welcome")({
   head: () => ({
     meta: [
-      { title: "Welcome — SwiftShip" },
+      { title: "Welcome — SwiftShip Logistics" },
       { name: "description", content: "Book, track, and manage shipments with a modern logistics platform." },
     ],
   }),

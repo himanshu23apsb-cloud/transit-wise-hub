@@ -10,7 +10,7 @@ import { useAuth } from "@/lib/mock/auth";
 import { useData } from "@/lib/mock/store";
 
 export const Route = createFileRoute("/driver")({
-  head: () => ({ meta: [{ title: "Driver dashboard — SwiftShip" }] }),
+  head: () => ({ meta: [{ title: "Driver dashboard — SwiftShip Logistics" }] }),
   component: DriverDashboard,
 });
 

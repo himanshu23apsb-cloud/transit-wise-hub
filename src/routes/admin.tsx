@@ -10,7 +10,7 @@ import { useAuth } from "@/lib/mock/auth";
 import { useData } from "@/lib/mock/store";
 
 export const Route = createFileRoute("/admin")({
-  head: () => ({ meta: [{ title: "Admin dashboard — SwiftShip" }] }),
+  head: () => ({ meta: [{ title: "Admin dashboard — SwiftShip Logistics" }] }),
   component: AdminDashboard,
 });
 

@@ -11,7 +11,7 @@ import { useAuth, roleHome } from "@/lib/mock/auth";
 import type { Role } from "@/lib/mock/seed";
 
 export const Route = createFileRoute("/auth/login")({
-  head: () => ({ meta: [{ title: "Sign in — SwiftShip" }] }),
+  head: () => ({ meta: [{ title: "Sign in — SwiftShip Logistics" }] }),
   component: Login,
 });
 
