@@ -55,7 +55,7 @@ function Settings() {
                 <Label className="text-sm">Dark mode</Label>
                 <p className="text-xs text-muted-foreground">Switch between light and dark themes</p>
               </div>
-              <Switch checked={theme === "dark"} onCheckedChange={toggleTheme} />
+              <Switch checked={dark} onCheckedChange={toggleDark} />
             </div>
           </div>
           <div className="rounded-2xl border bg-card p-5 soft-shadow">
