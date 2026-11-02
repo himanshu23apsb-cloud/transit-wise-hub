@@ -118,7 +118,7 @@ function DashHeader({ role, name, onSignOut }: { role: string; name: string; onS
   return (
     <header className="sticky top-0 z-40 border-b bg-background/80 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-7xl items-center gap-3 px-4 sm:px-6">
-        <Link to="/welcome" className="text-lg font-black tracking-tight">SwiftShip</Link>
+        <Link to="/welcome" className="text-lg font-black tracking-tight">SwiftShip Logistics</Link>
         <span className="ml-2 rounded-full border bg-card px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">{role}</span>
         <nav className="ml-6 hidden gap-1 md:flex">
           <Link to="/customer" className="rounded-lg px-3 py-1.5 text-sm text-muted-foreground hover:bg-muted hover:text-foreground">Customer view</Link>
