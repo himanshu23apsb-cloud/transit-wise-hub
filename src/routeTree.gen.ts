@@ -10,7 +10,9 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WelcomeRouteImport } from './routes/welcome'
+import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as LiveRouteImport } from './routes/live'
+import { Route as HelpRouteImport } from './routes/help'
 import { Route as DriverRouteImport } from './routes/driver'
 import { Route as CustomerRouteImport } from './routes/customer'
 import { Route as AdminRouteImport } from './routes/admin'
@@ -27,9 +29,19 @@ const WelcomeRoute = WelcomeRouteImport.update({
   path: '/welcome',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LiveRoute = LiveRouteImport.update({
   id: '/live',
   path: '/live',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HelpRoute = HelpRouteImport.update({
+  id: '/help',
+  path: '/help',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DriverRoute = DriverRouteImport.update({
@@ -88,7 +100,9 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRoute
   '/customer': typeof CustomerRoute
   '/driver': typeof DriverRoute
+  '/help': typeof HelpRoute
   '/live': typeof LiveRoute
+  '/settings': typeof SettingsRoute
   '/welcome': typeof WelcomeRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
@@ -102,7 +116,9 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminRoute
   '/customer': typeof CustomerRoute
   '/driver': typeof DriverRoute
+  '/help': typeof HelpRoute
   '/live': typeof LiveRoute
+  '/settings': typeof SettingsRoute
   '/welcome': typeof WelcomeRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
@@ -117,7 +133,9 @@ export interface FileRoutesById {
   '/admin': typeof AdminRoute
   '/customer': typeof CustomerRoute
   '/driver': typeof DriverRoute
+  '/help': typeof HelpRoute
   '/live': typeof LiveRoute
+  '/settings': typeof SettingsRoute
   '/welcome': typeof WelcomeRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
@@ -133,7 +151,9 @@ export interface FileRouteTypes {
     | '/admin'
     | '/customer'
     | '/driver'
+    | '/help'
     | '/live'
+    | '/settings'
     | '/welcome'
     | '/auth/forgot-password'
     | '/auth/login'
@@ -147,7 +167,9 @@ export interface FileRouteTypes {
     | '/admin'
     | '/customer'
     | '/driver'
+    | '/help'
     | '/live'
+    | '/settings'
     | '/welcome'
     | '/auth/forgot-password'
     | '/auth/login'
@@ -161,7 +183,9 @@ export interface FileRouteTypes {
     | '/admin'
     | '/customer'
     | '/driver'
+    | '/help'
     | '/live'
+    | '/settings'
     | '/welcome'
     | '/auth/forgot-password'
     | '/auth/login'
@@ -176,7 +200,9 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRoute
   CustomerRoute: typeof CustomerRoute
   DriverRoute: typeof DriverRoute
+  HelpRoute: typeof HelpRoute
   LiveRoute: typeof LiveRoute
+  SettingsRoute: typeof SettingsRoute
   WelcomeRoute: typeof WelcomeRoute
   AuthForgotPasswordRoute: typeof AuthForgotPasswordRoute
   AuthLoginRoute: typeof AuthLoginRoute
@@ -195,11 +221,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WelcomeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/live': {
       id: '/live'
       path: '/live'
       fullPath: '/live'
       preLoaderRoute: typeof LiveRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/help': {
+      id: '/help'
+      path: '/help'
+      fullPath: '/help'
+      preLoaderRoute: typeof HelpRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/driver': {
@@ -280,7 +320,9 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRoute,
   CustomerRoute: CustomerRoute,
   DriverRoute: DriverRoute,
+  HelpRoute: HelpRoute,
   LiveRoute: LiveRoute,
+  SettingsRoute: SettingsRoute,
   WelcomeRoute: WelcomeRoute,
   AuthForgotPasswordRoute: AuthForgotPasswordRoute,
   AuthLoginRoute: AuthLoginRoute,
