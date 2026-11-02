@@ -1,11 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
 import { ArrowLeft, Bell, Palette, User, Shield } from "lucide-react";
 import { PageHeader } from "@/components/common/page-header";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/lib/mock/auth";
-import { useData } from "@/lib/mock/store";
 
 export const Route = createFileRoute("/settings")({
   head: () => ({ meta: [{ title: "Settings — SwiftShip Logistics" }] }),
@@ -14,8 +14,18 @@ export const Route = createFileRoute("/settings")({
 
 function Settings() {
   const session = useAuth((s) => s.session);
-  const theme = useData((s) => s.theme);
-  const toggleTheme = useData((s) => s.toggleTheme);
+  const [dark, setDark] = useState(
+    () => typeof document !== "undefined" && document.documentElement.classList.contains("dark"),
+  );
+  const toggleDark = (next: boolean) => {
+    setDark(next);
+    document.documentElement.classList.toggle("dark", next);
+    try {
+      localStorage.setItem("swiftship-theme", next ? "dark" : "light");
+    } catch {
+      /* ignore */
+    }
+  };
 
   const prefs = [
     { icon: Bell, label: "Shipment notifications", desc: "Status updates for every movement", defaultChecked: true },
