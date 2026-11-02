@@ -7,9 +7,9 @@ import { Logo } from "@/components/brand/logo";
 export const Route = createFileRoute("/live")({
   head: () => ({
     meta: [
-      { title: "Live fleet tracking — Freightly" },
+      { title: "Live fleet tracking — SwiftShip" },
       { name: "description", content: "Watch every shipment move in real time with animated markers and live status updates." },
-      { property: "og:title", content: "Live fleet tracking — Freightly" },
+      { property: "og:title", content: "Live fleet tracking — SwiftShip" },
       { property: "og:description", content: "Interactive live map with animated trucks, routes, and one-tap status advancement." },
     ],
   }),

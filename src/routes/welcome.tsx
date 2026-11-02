@@ -6,7 +6,7 @@ import { Logo } from "@/components/brand/logo";
 export const Route = createFileRoute("/welcome")({
   head: () => ({
     meta: [
-      { title: "Welcome — Freightly" },
+      { title: "Welcome — SwiftShip" },
       { name: "description", content: "Book, track, and manage shipments with a modern logistics platform." },
     ],
   }),
@@ -74,7 +74,7 @@ function Welcome() {
             <div className="mt-10 flex items-center gap-6">
               <div className="flex -space-x-2">
                 {[1,2,3,4,5].map(i => (
-                  <img key={i} src={`https://api.dicebear.com/7.x/adventurer/svg?seed=Freightly${i}`} alt="" className="h-9 w-9 rounded-full border-2 border-background bg-muted" />
+                  <img key={i} src={`https://api.dicebear.com/7.x/adventurer/svg?seed=SwiftShip${i}`} alt="" className="h-9 w-9 rounded-full border-2 border-background bg-muted" />
                 ))}
               </div>
               <div className="text-sm">
@@ -330,7 +330,7 @@ function Welcome() {
         <footer className="border-t py-8">
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
             <Logo tagline />
-            <div className="text-xs text-muted-foreground">© 2026 Freightly. Built as a demo — every pixel handcrafted.</div>
+            <div className="text-xs text-muted-foreground">© 2026 SwiftShip. Built as a demo — every pixel handcrafted.</div>
           </div>
         </footer>
       </main>

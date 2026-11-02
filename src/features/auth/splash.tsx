@@ -20,7 +20,7 @@ export function Splash() {
           <Truck className="h-10 w-10" />
         </div>
         <div className="text-center">
-          <div className="text-2xl font-bold tracking-tight">Freightly</div>
+          <div className="text-2xl font-bold tracking-tight">SwiftShip</div>
           <div className="text-sm text-muted-foreground">Smart Transportation & Logistics</div>
         </div>
         <div className="mt-4 h-1 w-40 overflow-hidden rounded-full bg-muted">

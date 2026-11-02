@@ -9,7 +9,7 @@ import { useAuth, roleHome } from "@/lib/mock/auth";
 import type { Role } from "@/lib/mock/seed";
 
 export const Route = createFileRoute("/auth/register")({
-  head: () => ({ meta: [{ title: "Create account — Freightly" }] }),
+  head: () => ({ meta: [{ title: "Create account — SwiftShip" }] }),
   component: Register,
 });
 

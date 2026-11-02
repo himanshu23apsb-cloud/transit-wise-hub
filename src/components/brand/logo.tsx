@@ -8,7 +8,7 @@ export function Logo({ className, tagline = false }: { className?: string; tagli
         <Truck className="h-5 w-5" />
       </div>
       <div className="leading-tight">
-        <div className="font-bold tracking-tight">Freightly</div>
+        <div className="font-bold tracking-tight">SwiftShip</div>
         {tagline ? <div className="text-[11px] text-muted-foreground">Smart Logistics</div> : null}
       </div>
     </div>

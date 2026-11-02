@@ -19,7 +19,7 @@ export function AuthShell({
         <Link to="/welcome"><Logo className="[&_.leading-tight>div:first-child]:text-white [&_.leading-tight>div:last-child]:text-white/70" /></Link>
         <div className="mt-auto max-w-md">
           <div className="text-3xl font-bold">Move the world, one shipment at a time.</div>
-          <p className="mt-3 text-sm text-white/80">Freightly powers 12,000+ deliveries across India every month with live tracking, smart routing, and transparent pricing.</p>
+          <p className="mt-3 text-sm text-white/80">SwiftShip powers 12,000+ deliveries across India every month with live tracking, smart routing, and transparent pricing.</p>
           <div className="mt-8 flex items-center gap-3">
             <div className="flex -space-x-2">
               {[1, 2, 3, 4].map((i) => (

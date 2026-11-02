@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { AuthShell } from "@/features/auth/shell";
 
 export const Route = createFileRoute("/auth/reset-password")({
-  head: () => ({ meta: [{ title: "Reset password — Freightly" }] }),
+  head: () => ({ meta: [{ title: "Reset password — SwiftShip" }] }),
   component: ResetPassword,
 });
 

@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { AuthShell } from "@/features/auth/shell";
 
 export const Route = createFileRoute("/auth/forgot-password")({
-  head: () => ({ meta: [{ title: "Forgot password — Freightly" }] }),
+  head: () => ({ meta: [{ title: "Forgot password — SwiftShip" }] }),
   component: ForgotPassword,
 });
 

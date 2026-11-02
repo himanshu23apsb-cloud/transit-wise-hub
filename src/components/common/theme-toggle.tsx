@@ -12,7 +12,7 @@ export function ThemeToggle() {
     setDark(next);
     document.documentElement.classList.toggle("dark", next);
     try {
-      localStorage.setItem("freightly-theme", next ? "dark" : "light");
+      localStorage.setItem("swiftship-theme", next ? "dark" : "light");
     } catch {
       /* ignore */
     }
