@@ -90,6 +90,6 @@ export const useData = create<DataState>()(
         })),
       reset: () => set(buildSeed()),
     }),
-    { name: "freightly-data", version: 1 },
+    { name: "swiftship-data", version: 1 },
   ),
 );

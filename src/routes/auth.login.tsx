@@ -11,14 +11,14 @@ import { useAuth, roleHome } from "@/lib/mock/auth";
 import type { Role } from "@/lib/mock/seed";
 
 export const Route = createFileRoute("/auth/login")({
-  head: () => ({ meta: [{ title: "Sign in — Freightly" }] }),
+  head: () => ({ meta: [{ title: "Sign in — SwiftShip Logistics" }] }),
   component: Login,
 });
 
 function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
-  const [identifier, setIdentifier] = useState("demo@freightly.com");
+  const [identifier, setIdentifier] = useState("demo@swiftship.com");
   const [password, setPassword] = useState("password");
   const [role, setRole] = useState<Role>("customer");
 
@@ -30,7 +30,7 @@ function Login() {
   };
 
   const quick = (r: Role) => {
-    const s = login(`${r}@freightly.com`, "demo", r);
+    const s = login(`${r}@swiftship.com`, "demo", r);
     toast.success(`Signed in as ${r}`);
     navigate({ to: roleHome(s.role) });
   };

@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { AuthShell } from "@/features/auth/shell";
 
 export const Route = createFileRoute("/auth/verify-email")({
-  head: () => ({ meta: [{ title: "Verify email — Freightly" }] }),
+  head: () => ({ meta: [{ title: "Verify email — SwiftShip Logistics" }] }),
   component: VerifyEmail,
 });
 

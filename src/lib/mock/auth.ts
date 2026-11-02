@@ -52,7 +52,7 @@ export const useAuth = create<AuthState>()(
       updateProfile: (patch) =>
         set((state) => ({ session: state.session ? { ...state.session, ...patch } : null })),
     }),
-    { name: "freightly-auth" },
+    { name: "swiftship-auth" },
   ),
 );
 

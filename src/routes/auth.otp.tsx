@@ -6,7 +6,7 @@ import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp
 import { AuthShell } from "@/features/auth/shell";
 
 export const Route = createFileRoute("/auth/otp")({
-  head: () => ({ meta: [{ title: "OTP verification — Freightly" }] }),
+  head: () => ({ meta: [{ title: "OTP verification — SwiftShip Logistics" }] }),
   component: Otp,
 });
 

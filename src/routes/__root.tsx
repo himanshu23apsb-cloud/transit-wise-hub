@@ -6,6 +6,7 @@ import {
   useRouter,
   HeadContent,
   Scripts,
+  type ErrorComponentProps,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 
@@ -35,7 +36,7 @@ function NotFoundComponent() {
   );
 }
 
-function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
+function ErrorComponent({ error, reset }: ErrorComponentProps) {
   console.error(error);
   const router = useRouter();
   useEffect(() => {
@@ -78,14 +79,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Freightly — Smart Transportation & Logistics" },
+      { title: "SwiftShip Logistics — Smart Transportation & Logistics" },
       { name: "description", content: "Modern logistics management platform for customers, drivers, and administrators. Book, track, and manage shipments in real time." },
-      { name: "author", content: "Freightly" },
-      { property: "og:title", content: "Freightly — Smart Transportation & Logistics" },
+      { name: "author", content: "SwiftShip Logistics" },
+      { property: "og:title", content: "SwiftShip Logistics — Smart Transportation & Logistics" },
       { property: "og:description", content: "Modern logistics management platform for customers, drivers, and administrators. Book, track, and manage shipments in real time." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Freightly — Smart Transportation & Logistics" },
+      { name: "twitter:title", content: "SwiftShip Logistics — Smart Transportation & Logistics" },
       { name: "twitter:description", content: "Modern logistics management platform for customers, drivers, and administrators. Book, track, and manage shipments in real time." },
       { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/4c6c7b8c-840e-4b4b-b5c7-7a868047918a" },
       { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/4c6c7b8c-840e-4b4b-b5c7-7a868047918a" },
@@ -144,7 +145,7 @@ function RootComponent() {
 function ThemedShell({ children }: { children: ReactNode }) {
   useEffect(() => {
     try {
-      const stored = localStorage.getItem("freightly-theme");
+      const stored = localStorage.getItem("swiftship-theme");
       if (stored === "dark") document.documentElement.classList.add("dark");
     } catch {
       /* ignore */
